@@ -40,10 +40,11 @@ def delete(request, post_id):
 
 
 def profile(request, username):
-	user = User.objects.get(username=username)
-	posts = user.posts.all()
-	context = {'user':user, 'posts':posts}
-	return render(request, 'twitter/profile.html', context)
+    perfil_usuario = User.objects.get(username=username)
+    posts = perfil_usuario.posts.all()
+    context = {'perfil_usuario': perfil_usuario, 'posts': posts}
+    return render(request, 'twitter/profile.html', context)
+
 
 @login_required
 def editar(request):
