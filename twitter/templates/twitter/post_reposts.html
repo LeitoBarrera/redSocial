@@ -1,0 +1,14 @@
+{% extends 'twitter/layout.html' %}
+{% load humanize %}
+{% block content %}
+<h3>Usuarios que hicieron repost de: "{{ post.content }}"</h3>
+<hr>
+{% for repost in reposts %}
+    <div>
+        <a href="{% url 'profile' repost.user.username %}">@{{ repost.user.username }}</a>
+        <small>{{ repost.timestamp|naturaltime }}</small>
+    </div>
+{% empty %}
+    <p>Nadie ha hecho repost de este post aún.</p>
+{% endfor %}
+{% endblock %}

@@ -1,35 +1,40 @@
 {% extends 'twitter/layout.html' %}
+{% load static %}
 
 {% block content %}
-<body class="login-page">
-    <div class="twitter-login-box">
-        <header>
-            <img src="https://static01.nyt.com/images/2014/08/10/magazine/10wmt/10wmt-jumbo-v4.jpg?quality=90&auto=webp" alt="twitter logo">
-            <h1>Inicia Sesión</h1>
+<body class="login-page d-flex justify-content-center align-items-center" style="min-height: 100vh; background-color: #f8f9fa;">
+    <div class="twitter-login-box bg-white p-4 rounded-4 shadow-sm text-center" style="width: 350px;">
+        <header class="mb-3">
+            <img src="{% static 'img/aulainicio.png' %}"
+                alt="nuevo logo"
+                class="img-fluid rounded-circle mb-2"
+                style="width: 80px; height: 80px;">
+            <h1 class="h4 fw-bold text-success">Inicia Sesión</h1>
         </header>
 
         <form method="post">
             {% csrf_token %}
-            <div class="input-wrapper">
-                <label for="user-name-id">Username</label>
+            <div class="mb-3 text-start">
+                <label for="id_username" class="form-label fw-bold text-success">Username</label>
                 {{ form.username }}
             </div>
 
-            <div class="input-wrapper">
-                <label for="password-id">Password</label>
+            <div class="mb-3 text-start">
+                <label for="id_password" class="form-label fw-bold text-success">Password</label>
                 {{ form.password }}
             </div>
+
             {% if form.errors %}
-            <p>Username or password not correct.</p>
+            <p class="text-danger small">Username o contraseña incorrectos.</p>
             {% endif %}
 
-            <button class="twitter-btn">Log in</button>
+            <button type="submit" class="btn btn-success w-100 rounded-pill fw-bold">Log in</button>
         </form>
 
-        <div class="footer">
-            <a href="#">Forget Password</a> . 
-            <a href="#">Sign up to twitter</a>
+        <div class="footer mt-3">
+            <a href="#" class="text-decoration-none text-success small">¿Olvidaste tu contraseña?</a> ·
+            <a href="#" class="text-decoration-none text-success small">Crear cuenta</a>
         </div>
-
     </div>
+</body>
 {% endblock content %}

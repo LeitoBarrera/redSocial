@@ -1,0 +1,22 @@
+{% extends 'twitter/layout.html' %}
+{% load humanize %}
+{% block content %}
+<h3>Comentarios de: "{{ post.content }}"</h3>
+
+<form method="POST">
+    {% csrf_token %}
+    <textarea name="content" rows="2" class="form-control" placeholder="Responder..."></textarea>
+    <button type="submit" class="btn btn-primary mt-2">Comentar</button>
+</form>
+
+<hr>
+{% for comment in comments %}
+    <div>
+        <a href="{% url 'profile' comment.user.username %}">@{{ comment.user.username }}</a>
+        {{ comment.content }}
+        <small>{{ comment.timestamp|naturaltime }}</small>
+    </div>
+{% empty %}
+    <p>No hay comentarios aún.</p>
+{% endfor %}
+{% endblock %}

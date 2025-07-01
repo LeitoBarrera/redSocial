@@ -5,7 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>What's happening?</title>
+    <title>Centro Social</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
         integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css?family=Asap" rel="stylesheet">
@@ -14,30 +14,25 @@
 
     <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
     
-    <link rel="shortcut icon" href="../static/img/tab-icon.png" type="image/x-icon">
+    <link rel="shortcut icon" href="../static/img/aula.jpg" type="image/x-icon">
 </head>
 
 <body>
-
+    {% if not hide_navbar %}
     <div class="container-fluid" style="padding: 0;">
         <nav class="navbar navbar-expand-lg navbar-light">
             <a class="navbar-brand" style="color: white;" href="#">
-                <!-- Twitter logo -->
-                <img src="{% static 'img/twitter-brands.svg' %}" width="30" height="30" class="d-inline-block align-top" alt="">
-                <!-- Twitter logo -->
-                Twttr Clone
+                <img src="{% static 'img/aula.jpg' %}" width="30" height="30" class="d-inline-block align-top" alt="">
+                Red Social
             </a>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="hi mr-auto">
-
-                </ul>
-                <!-- Nav Bar -->
+                <ul class="hi mr-auto"></ul>
                 <a href="{% url 'home' %}" class="btn text-white my-2 my-sm-0" type="submit">Inicio</a>
                 <a href="{% url 'logout' %}" class="btn text-white my-2 my-sm-0" type="submit">Logout</a>
-                <!-- Nav Bar -->
             </div>
         </nav>
     </div>
+    {% endif %}
 
     {% block content %}
     <div id="main" class="container-fluid d-flex">

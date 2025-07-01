@@ -1,8 +1,11 @@
 from django.shortcuts import render, redirect
-from .models import Profile, Post, Relationship
+from .models import Profile, Post, Relationship, Like, Repost, Comment
 from .forms import UserRegisterForm, PostForm, ProfileUpdateForm, UserUpdateForm
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.views import LoginView
+
+
 
 @login_required
 def home(request):
@@ -81,13 +84,62 @@ def unfollow(request, username):
 	rel.delete()
 	return redirect('home')
 
+@login_required
+def like_post(request, post_id):
+    post = Post.objects.get(id=post_id)
+    like, created = Like.objects.get_or_create(user=request.user, post=post)
+    if not created:
+        like.delete()  # toggle like
+    return redirect('home')
 
 
+@login_required
+def repost(request, post_id):
+    post = Post.objects.get(id=post_id)
+    repost, created = Repost.objects.get_or_create(user=request.user, post=post)
+    if not created:
+        repost.delete() 
+    else:
+        Post.objects.create(user=request.user, content=post.content)
+    return redirect('home')
+
+@login_required
+def comment_post(request, post_id):
+    post = Post.objects.get(id=post_id)
+    if request.method == 'POST':
+        content = request.POST.get('content')
+        if content:
+            Comment.objects.create(user=request.user, post=post, content=content)
+    return redirect('home')
+  
+@login_required
+def post_comments(request, post_id):
+    post = Post.objects.get(id=post_id)
+    comments = Comment.objects.filter(post=post).order_by('-timestamp')
+    if request.method == 'POST':
+        content = request.POST.get('content')
+        if content:
+            Comment.objects.create(user=request.user, post=post, content=content)
+            return redirect('post_comments', post_id=post_id)
+    return render(request, 'twitter/post_comments.html', {'post': post, 'comments': comments})
 
 
+@login_required
+def post_reposts(request, post_id):
+    post = Post.objects.get(id=post_id)
+    if post.user != request.user:
+        return redirect('home')
+    reposts = Repost.objects.filter(post=post)
+    return render(request, 'twitter/post_reposts.html', {'post': post, 'reposts': reposts})
 
 
+class CustomLoginView(LoginView):
+    template_name = 'twitter/login.html'
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['hide_navbar'] = True 
+        return context
 
 
 

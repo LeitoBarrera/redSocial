@@ -1,4 +1,4 @@
-#!C:\Users\jaide\Downloads\social_project\socialenv\Scripts\python.exe
+#!C:\redSocial\socialenv\Scripts\python.exe
 # When the django-admin.py deprecation ends, remove this script.
 import warnings
 
